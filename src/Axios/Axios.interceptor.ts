@@ -10,8 +10,8 @@ AppAxios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
 
-    generateHeaders(config);
-    console.log(config);
+    // generateHeaders(config);
+    // console.log(config);
     return config;
   },
   function (error) {
