@@ -130,10 +130,16 @@ const UseFilter = (): HooksFilter => {
     price: "asc",
   });
 
-  const setCategory = (params: string) =>
-    setFilter((prev: Filter) => ({ ...prev, category: params }));
-  const setPrice = (params: Price) =>
-    setFilter((prev: Filter) => ({ ...prev, price: params }));
+  const setCategory = React.useCallback(
+    (params: string) =>
+      setFilter((prev: Filter) => ({ ...prev, category: params })),
+    []
+  );
+  const setPrice = React.useCallback(
+    (params: Price) =>
+      setFilter((prev: Filter) => ({ ...prev, price: params })),
+    []
+  );
 
   return { filter, setCategory, setPrice };
 };
@@ -164,7 +170,7 @@ const HomeComponent = (): React.ReactNode => {
   const isLoading = data.length === 0;
 
   return (
-    <div className="flex flex-col w-full items-center justify-between min-h-screen gap-6 py-20">
+    <div className="flex flex-col w-full items-center justify-between min-h-screen gap-6 py-20 p-12">
       <React.Suspense fallback={<LoadingComponent />}>
         {_renderFilter(category, dataPrice, filterHooks)}
         {_renderProduct(data, _detailsHandler, isLoading)}

@@ -94,7 +94,7 @@ const DetailsScreen = (): React.ReactNode => {
   const isLoading = !data.brand;
 
   return (
-    <div className="flex w-full min-h-screen gap-4 items-center flex-col">
+    <div className="flex w-full min-h-screen gap-4 items-center flex-col p-12 px-36">
       {_renderCarousel(data?.images, isLoading)}
       <React.Suspense fallback={<LoadingComponent />}>
         {isLoading ? <LoadingComponent /> : _renderDetails(data)}
