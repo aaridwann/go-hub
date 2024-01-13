@@ -9,7 +9,7 @@ interface StateRedux {
   };
 }
 function HomeContainer(props: StateRedux) {
-  return <HomeComponent {...props} />;
+  return <HomeComponent />;
 }
 
 const mapStateToProps = (state: StateRedux) => ({

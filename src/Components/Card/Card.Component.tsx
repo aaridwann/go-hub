@@ -16,11 +16,10 @@ const _renderColorProgress = (stock: number): string => {
 const CardComponent = (props: CardProduct): React.ReactNode => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
-      <div className=" bg-white relative h-96 overflow-hidden flex items-center justify-center bg-cover">
+      <div className=" bg-white relative h-52 overflow-hidden flex items-center justify-center bg-cover">
         <Image
-          // className=" w-[600px] bg-cover"
-          width={300}
-          height={300}
+          width={200}
+          height={200}
           src={props.image}
           alt="Product"
         />
@@ -29,7 +28,7 @@ const CardComponent = (props: CardProduct): React.ReactNode => {
         <h2 onClick={props.onClick} className=" cursor-pointer card-title">
           {props.name}
         </h2>
-        <p>{props.description}</p>
+        <p className=" text-ellipsis truncate ">{props.description}</p>
         <div className=" text-white flex items-center justify-between">
           <div className=" flex flex-col gap-1">
             <p>Stock</p>

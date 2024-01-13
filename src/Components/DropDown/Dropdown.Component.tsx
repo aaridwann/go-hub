@@ -9,7 +9,7 @@ const DropDownComponent = (props: Props): React.ReactNode => {
         props.side === "left" ? "dropdown-left" : "dropdown-right"
       }`}
     >
-      <div tabIndex={0} role="button" className="m-1 btn min-w-52">
+      <div tabIndex={0} role="button" className="m-1 btn min-w-32">
         {props.selected || props.label}
       </div>
       <ul

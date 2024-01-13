@@ -8,7 +8,7 @@ const Pagination = (props: Props): React.ReactNode => {
       <button onClick={() => props.dec()} className="join-item btn">
         «
       </button>
-      <button className="join-item btn">{props.currentPage + 1}</button>
+      <button className="join-item btn">{props.currentPage}</button>
       <button onClick={() => props.inc()} className="join-item btn">
         »
       </button>

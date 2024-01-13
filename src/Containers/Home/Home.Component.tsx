@@ -36,10 +36,12 @@ const _fetchHandler = (filter: Filter, page: number): FetchHandler => {
   const [data, setData] = React.useState([]);
   const [category, setCategory] = React.useState<string[]>([]);
   const { URI } = Constants;
+  const limitPerPage = 6;
+  const skip = (page - 1) * limitPerPage;
 
   const generateUrl = filter.category
     ? URI + `/category/${filter.category}`
-    : URI;
+    : URI + `?limit=${limitPerPage}&skip=${skip}`;
   const getCategory = URI + "/categories";
 
   React.useEffect(() => {
@@ -145,13 +147,13 @@ const UseFilter = (): HooksFilter => {
 };
 
 const UsePaginate = (): HooksPage => {
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const incPage = React.useCallback(() => {
     setCurrentPage((prev) => prev + 1);
   }, []);
   const decPage = React.useCallback(() => {
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : prev));
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
   }, []);
 
   return { currentPage, incPage, decPage };
