@@ -1,11 +1,8 @@
 import React from "react";
 
-interface Props {
-  title: string;
-  price: string | number;
-  discount: string | number;
-}
-const Badge = (props: Props) => {
+import { Props } from "./Badge.Types";
+
+const Badge = (props: Props): React.ReactNode => {
   return (
     <div className="stats bg-primary text-primary-content">
       <div className="stat">
@@ -20,3 +17,9 @@ const Badge = (props: Props) => {
 };
 
 export default Badge;
+
+Badge.defaultProps = {
+  title: "",
+  price: 0,
+  discount: 0,
+};

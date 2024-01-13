@@ -1,11 +1,8 @@
 import React from "react";
 
-interface ButtonInterface {
-  title: string;
-  color?: string;
-  onPress?: VoidFunction;
-}
-const ButtonComponent = (props: ButtonInterface) => {
+import { ButtonInterface } from "./Button.Types";
+
+const ButtonComponent = (props: ButtonInterface): React.ReactNode => {
   return (
     <button onClick={props.onPress} className=" bg-blue-300 p-4">
       {props.title}
@@ -14,3 +11,9 @@ const ButtonComponent = (props: ButtonInterface) => {
 };
 
 export default ButtonComponent;
+
+ButtonComponent.defaultProps = {
+  title: "",
+  color: "",
+  onPress: () => undefined,
+};

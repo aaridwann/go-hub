@@ -1,13 +1,8 @@
 import React from "react";
 
-interface Props {
-  size: number;
-  currentPage: number;
-  inc: () => void;
-  dec: () => void;
-}
+import { Props } from "./Pagination.Types";
 
-const Pagination = (props: Props) => {
+const Pagination = (props: Props): React.ReactNode => {
   return (
     <div className="join">
       <button onClick={() => props.dec()} className="join-item btn">
@@ -22,8 +17,10 @@ const Pagination = (props: Props) => {
 };
 
 Pagination.defaultProps = {
-  size: 4,
+  size: 1,
   currentPage: 1,
+  inc: () => undefined,
+  dec: () => undefined,
 };
 
 export default Pagination;

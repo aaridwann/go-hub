@@ -1,17 +1,8 @@
 import Image from "next/image";
 import React from "react";
+import { CardProduct } from "./Card.Types";
 
-interface CardProduct {
-  id: string | number;
-  name: string;
-  description: string;
-  price: string | number;
-  image: string;
-  stock: number;
-  onClick: VoidFunction;
-}
-
-const _renderColorProgress = (stock: number) => {
+const _renderColorProgress = (stock: number): string => {
   let res =
     stock < 30
       ? "progress-error"
@@ -22,7 +13,7 @@ const _renderColorProgress = (stock: number) => {
   return res;
 };
 
-const CardComponent = (props: CardProduct) => {
+const CardComponent = (props: CardProduct): React.ReactNode => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure>
@@ -63,3 +54,13 @@ const CardComponent = (props: CardProduct) => {
 };
 
 export default CardComponent;
+
+CardComponent.defaultProps = {
+  id: "",
+  name: "",
+  description: "",
+  price: 0,
+  image: "",
+  stock: 0,
+  onClick: () => undefined,
+};

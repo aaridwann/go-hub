@@ -38,3 +38,8 @@ export interface HooksPage {
   incPage: () => void;
   decPage: () => void;
 }
+
+export interface FetchHandler {
+  data: Products[];
+  category: string[];
+}

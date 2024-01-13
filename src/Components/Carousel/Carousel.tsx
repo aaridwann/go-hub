@@ -1,11 +1,8 @@
 import Image from "next/image";
 import React from "react";
+import { Props } from "./Carousel.Types";
 
-interface Props {
-  data: string[];
-}
-
-const Carousel = (props: Props) => {
+const Carousel = (props: Props): React.ReactNode => {
   return (
     <div className="carousel carousel-end rounded-box">
       <div className="carousel-item">
@@ -25,3 +22,7 @@ const Carousel = (props: Props) => {
 };
 
 export default Carousel;
+
+Carousel.defaultProps = {
+  data: [""],
+};

@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoadingComponent = () => {
+const LoadingComponent = (): React.ReactNode => {
   return <span className="loading loading-spinner loading-lg">Loading...</span>;
 };
 

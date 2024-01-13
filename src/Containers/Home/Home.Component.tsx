@@ -1,8 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 
 import AppAxios from "@/Axios/Axios.interceptor";
 import Constants from "@/Constants/Constants";
+import LoadingComponent from "@/Components/Loading/Loading.Component";
 
 const CardComponent = React.lazy(
   () => import("@/Components/Card/Card.Component")
@@ -16,23 +17,22 @@ const Pagination = React.lazy(
 
 import {
   Details,
+  FetchHandler,
   Filter,
-  HomeComponentInterface,
   HooksFilter,
   HooksPage,
   Price,
   Products,
 } from "./Home.Types";
-import LoadingComponent from "@/Components/Loading/Loading.Component";
 
-const dataPrice = ["asc", "dsc"];
+const dataPrice: string[] = ["asc", "dsc"];
 
-const sortHandler = (data: Products[], order: Price) =>
+const sortHandler = (data: Products[], order: Price): Products[] =>
   data.sort((a, b) =>
     order === "asc" ? a.price - b.price : b.price - a.price
   );
 
-const _fetchHandler = (filter: Filter, page: number) => {
+const _fetchHandler = (filter: Filter, page: number): FetchHandler => {
   const [data, setData] = React.useState([]);
   const [category, setCategory] = React.useState<string[]>([]);
   const { URI } = Constants;
@@ -65,20 +65,28 @@ const _fetchHandler = (filter: Filter, page: number) => {
   return { data: finalData, category };
 };
 
-const _renderProduct = (data: Products[], onClick: Details) => (
+const _renderProduct = (
+  data: Products[],
+  onClick: Details,
+  isLoading: boolean
+): React.ReactNode => (
   <div className=" flex gap-4 flex-wrap w-full justify-center ">
-    {data.map(({ title, price, id, stock, thumbnail, description }) => (
-      <CardComponent
-        onClick={() => onClick(id)}
-        key={id}
-        id={id}
-        name={title}
-        description={description}
-        stock={stock}
-        price={"$ " + price}
-        image={thumbnail}
-      />
-    ))}
+    {isLoading ? (
+      <LoadingComponent />
+    ) : (
+      data.map(({ title, price, id, stock, thumbnail, description }) => (
+        <CardComponent
+          onClick={() => onClick(id)}
+          key={id}
+          id={id}
+          name={title}
+          description={description}
+          stock={stock}
+          price={"$ " + price}
+          image={thumbnail}
+        />
+      ))
+    )}
   </div>
 );
 
@@ -86,7 +94,7 @@ const _renderFilter = (
   category: string[],
   price: string[],
   filterHooks: HooksFilter
-) => (
+): React.ReactNode => (
   <div className=" w-full flex items-center justify-center gap-4">
     <h1>Filter: </h1>
     <DropDownComponent
@@ -102,6 +110,16 @@ const _renderFilter = (
       label="Sort Price"
       selected={filterHooks.filter.price}
       onClick={(data) => filterHooks.setPrice(data)}
+    />
+  </div>
+);
+
+const _renderPagination = (hooks: HooksPage): React.ReactNode => (
+  <div>
+    <Pagination
+      currentPage={hooks.currentPage}
+      inc={hooks.incPage}
+      dec={hooks.decPage}
     />
   </div>
 );
@@ -133,17 +151,7 @@ const UsePaginate = (): HooksPage => {
   return { currentPage, incPage, decPage };
 };
 
-const _renderPagination = (hooks: HooksPage) => (
-  <div>
-    <Pagination
-      currentPage={hooks.currentPage}
-      inc={hooks.incPage}
-      dec={hooks.decPage}
-    />
-  </div>
-);
-
-const HomeComponent = (props: HomeComponentInterface) => {
+const HomeComponent = (): React.ReactNode => {
   const filterHooks = UseFilter();
   const hooksPage = UsePaginate();
   const { data, category } = _fetchHandler(
@@ -157,15 +165,11 @@ const HomeComponent = (props: HomeComponentInterface) => {
 
   return (
     <div className="flex flex-col w-full items-center justify-between min-h-screen gap-6 py-20">
-      <Suspense fallback={<LoadingComponent />}>
+      <React.Suspense fallback={<LoadingComponent />}>
         {_renderFilter(category, dataPrice, filterHooks)}
-        {!isLoading ? (
-          _renderProduct(data, _detailsHandler)
-        ) : (
-          <LoadingComponent />
-        )}
+        {_renderProduct(data, _detailsHandler, isLoading)}
         {_renderPagination(hooksPage)}
-      </Suspense>
+      </React.Suspense>
     </div>
   );
 };
